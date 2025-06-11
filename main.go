@@ -20,21 +20,6 @@ func Initializer() []Pets {
 	}
 }
 
-var p = Initializer()
-
-func main() {
-	http.HandleFunc("GET /pets", RedirectGetPetHandler)
-	http.HandleFunc("POST /pets", RedirectPostPetHandler)
-
-	http.HandleFunc("GET /pets/", ShowAllPetsHandler)
-	http.HandleFunc("POST /pets/", NewPetHandler)
-
-	http.HandleFunc("GET /pets/{name}", GetPetHandler)
-	http.HandleFunc("DELETE /pets/{name}", DeletePetHandler)
-
-	http.ListenAndServe(":8080", nil)
-}
-
 func RedirectGetPetHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/pets/", http.StatusMovedPermanently)
 }
@@ -97,4 +82,19 @@ func DeletePetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Error(w, "Pet not found", http.StatusNotFound)
+}
+
+var p = Initializer()
+
+func main() {
+	http.HandleFunc("GET /pets", RedirectGetPetHandler)
+	http.HandleFunc("POST /pets", RedirectPostPetHandler)
+
+	http.HandleFunc("GET /pets/", ShowAllPetsHandler)
+	http.HandleFunc("POST /pets/", NewPetHandler)
+
+	http.HandleFunc("GET /pets/{name}", GetPetHandler)
+	http.HandleFunc("DELETE /pets/{name}", DeletePetHandler)
+
+	http.ListenAndServe(":8080", nil)
 }
