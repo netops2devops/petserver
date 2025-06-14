@@ -11,7 +11,7 @@ func loggerMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), "isLogged", true)
 		r = r.WithContext(ctx)
-		log.Print(time.Now(), r.Method, " ", r.RequestURI, r.WithContext(ctx))
+		log.Print(time.Now(), r.Method, r.RequestURI)
 		next.ServeHTTP(w, r)
 	})
 }
